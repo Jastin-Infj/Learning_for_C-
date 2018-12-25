@@ -1,15 +1,16 @@
 /**
 * @file 問題.cpp
-* @brief 基本情報技術者試験の問題対策用を１つにまとめたファイルです
+* @brief サンプルクラス集をまとめた関数です
 * @author Jastin
 * @date 2018/12/25
 * @par  History
 - 2018/12/25 横尾 拓実
 - 3次元Vectorクラスの追加
+- 2018/12/26 横尾 拓実
+- 再起関数の基本復習問題を追加　
 */
 
 #include <iostream>
-#include <Windows.h>
 namespace Common
 {
 	namespace Math
@@ -63,6 +64,36 @@ namespace Common
 				y = vector.y != 0 ? this->y / vector.y :  vector.y;
 				z = vector.z != 0 ? this->z / vector.z :  vector.z;
 				return Vector3<double>(x, y, z);
+			}
+			template<typename TYPE>
+			void Setx(TYPE x)
+			{
+				this->x = x;
+			}
+			template<typename TYPE>
+		    TYPE Getx()const
+			{
+				return this->x;
+			}
+			template<typename TYPE>
+			void Sety(TYPE y)
+			{
+				this->y = y;
+			}
+			template<typename TYPE>
+			TYPE Gety()const
+			{
+				return this->y;
+			}
+			template<typename TYPE>
+			void Setz(TYPE z)
+			{
+				this->z = z;
+			}
+			template<typename TYPE>
+			TYPE Getz()const
+			{
+				return this->z;
 			}
 			//正規化を行います
 			Vector3 Normalize()
@@ -127,22 +158,27 @@ namespace Common
 }
 namespace Sample
 {
-	class Kadai1
+	using namespace Common::Math;
+	class RecurrenceFunction
 	{
 	public:
-		Kadai1()
-		{
-
+		static void Sample1(Vector3<double>* counter)
+		{	
+			if(counter->Getx<double>() <= 0.0)
+			{
+				return;
+			}
+			Vector3<double> vector(1, 1, 1);
+			vector = *counter - vector;
+			Sample1(&vector);
+			counter->Output();
+			std::cout << std::endl;
 		}
 	};
 };
 int main()
 {
-	Common::Math::Vector3<double> vector1(1, 2, 3);
-	Common::Math::Vector3<double> vector2(4, 5, 6);
-	Common::Math::Vector3<double> total;
-	total = Common::Math::Vector3<double>::Outside(&vector1, &vector2);
-	std::cout << " 外 積 " << std::endl;
-	total.Output();
+	Common::Math::Vector3<double> vector(10, 10, 10);
+	Sample::RecurrenceFunction::Sample1(&vector);
 	system("pause");
 }
